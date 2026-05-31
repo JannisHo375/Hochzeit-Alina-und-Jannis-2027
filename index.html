@@ -748,59 +748,96 @@
     /* Full-bleed photo hero for kontakt */
     .kontakt-photo-hero {
       position: relative;
-      width: calc(100% + 0px);
-      height: 520px;
+      /* Break out of section-inner max-width */
+      width: 100vw;
+      left: 50%;
+      transform: translateX(-50%);
+      height: min(70vh, 600px);
       overflow: hidden;
       margin-bottom: 4rem;
-      border-radius: 6px;
     }
 
+    /* Ken-Burns zoom on scroll-reveal */
     .kontakt-photo-hero img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      object-position: center 25%;
+      /* Center on faces (upper-center of landscape photo) */
+      object-position: 60% 28%;
       display: block;
-      filter: sepia(8%) saturate(85%) brightness(0.97);
+      filter: sepia(5%) saturate(90%) brightness(1.0);
+      transform: scale(1.08);
+      transition: transform 1.8s cubic-bezier(0.22, 1, 0.36, 1),
+                  filter 1.8s ease;
     }
 
-    /* Gradient fade: bottom and sides */
+    /* When revealed: zoom slowly back to 1 */
+    .kontakt-photo-hero.is-visible img {
+      transform: scale(1.0);
+      filter: sepia(3%) saturate(92%) brightness(1.02);
+    }
+
+    /* Minimal fade – only bottom 25%, no side fades */
     .kontakt-photo-hero::after {
       content: '';
       position: absolute;
       inset: 0;
-      background:
-        linear-gradient(to bottom, transparent 40%, var(--bg) 100%),
-        linear-gradient(to right, var(--bg) 0%, transparent 12%, transparent 88%, var(--bg) 100%);
+      background: linear-gradient(
+        to bottom,
+        transparent 65%,
+        rgba(250, 248, 244, 0.55) 85%,
+        var(--bg) 100%
+      );
       pointer-events: none;
     }
 
     /* Names overlaid on photo */
     .kontakt-photo-overlay {
       position: absolute;
-      bottom: 2rem;
+      bottom: 2.2rem;
       left: 0;
       right: 0;
       text-align: center;
       z-index: 2;
       pointer-events: none;
+      /* Animate in after photo lands */
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity 0.9s ease 0.6s, transform 0.9s ease 0.6s;
+    }
+
+    .kontakt-photo-hero.is-visible .kontakt-photo-overlay {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     .kontakt-photo-overlay-name {
       font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-size: clamp(2.2rem, 5.5vw, 3.8rem);
       font-weight: 300;
       color: var(--text);
       letter-spacing: 0.04em;
+      text-shadow: 0 1px 20px rgba(250,248,244,0.7);
     }
 
     .kontakt-photo-overlay-date {
       font-family: 'Jost', sans-serif;
       font-size: 0.72rem;
-      letter-spacing: 0.22em;
+      letter-spacing: 0.24em;
       text-transform: uppercase;
       color: var(--text-muted);
-      margin-top: 0.3rem;
+      margin-top: 0.4rem;
+      text-shadow: 0 1px 10px rgba(250,248,244,0.8);
+    }
+
+    /* Mobile: fix object-position so both faces show */
+    @media (max-width: 640px) {
+      .kontakt-photo-hero {
+        height: min(55vh, 420px);
+      }
+      .kontakt-photo-hero img {
+        object-position: 55% 22%;
+      }
     }
 
     .kontakt-photo-wrap {
@@ -901,7 +938,6 @@
       .nav-links { display: none; }
       .burger { display: flex; }
       .kontakt-layout { grid-template-columns: 1fr; }
-      .kontakt-photo-wrap { order: -1; }
       .kontakt-photo-frame { display: none; }
     }
 
@@ -1135,7 +1171,7 @@
         </div>
 
         <div class="day-card reveal-child">
-          <p class="day-label">Sonntag</p>
+          <p class="day-label">Sonntag <span class="day-optional">optional</span></p>
           <p class="day-date">20. Juni</p>
           <p class="day-desc">Wer mag, frühstückt noch gemeinsam auf dem Hof – ein ruhiger Ausklang, bevor sich alle auf den Heimweg machen.</p>
         </div>
@@ -1313,7 +1349,7 @@
       </p>
 
       <!-- Full-bleed photo with fade-out -->
-      <div class="kontakt-photo-hero reveal">
+      <div class="kontakt-photo-hero" id="photo-hero">
         <img
           src="alina-jannis.jpeg"
           alt="Alina und Jannis – frisch verlobt"
@@ -1414,6 +1450,21 @@
     document.querySelectorAll(revealSelectors).forEach(el => {
       observer.observe(el);
     });
+
+    // ── Photo hero: separate observer (lower threshold = triggers earlier) ──
+    const photoHero = document.getElementById('photo-hero');
+    if (photoHero) {
+      const photoObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            // Short delay so the scroll settles before animation fires
+            setTimeout(() => photoHero.classList.add('is-visible'), 80);
+            photoObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.05 });
+      photoObserver.observe(photoHero);
+    }
   </script>
 
 </body>
