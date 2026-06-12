@@ -381,17 +381,17 @@
       background: var(--cream);
       border-radius: 4px;
       padding: 2rem 1.5rem;
-      text-align: center;
+      text-align: left;
       position: relative;
     }
 
     .day-card::before {
       content: '';
       display: block;
-      width: 32px;
+      width: 24px;
       height: 1px;
       background: var(--terra);
-      margin: 0 auto 1.4rem;
+      margin: 0 0 1.4rem 0;
       opacity: 0.6;
     }
 
@@ -441,8 +441,16 @@
       border: 1px solid var(--sage-light);
       border-radius: 20px;
       padding: 1px 7px;
-      vertical-align: middle;
-      margin-left: 6px;
+    }
+    .day-optional-top {
+      display: block;
+      text-align: center;
+      margin-bottom: 0.6rem;
+    }
+    .unterkunft-tag-top {
+      display: block;
+      text-align: center;
+      margin-bottom: 1rem;
     }
 
     /* ===== ANREISE SECTION ===== */
@@ -652,6 +660,22 @@
       .unterkunft-grid { grid-template-columns: 1fr; }
     }
 
+
+    /* ===== KREIDETAFEL FOTO ===== */
+    .kreidetafel-wrap {
+      margin-top: 2.4rem;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .kreidetafel-img {
+      width: 100%;
+      max-height: 320px;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+      filter: sepia(6%) saturate(88%);
+    }
+
     /* ===== RÜCKMELDUNG SECTION ===== */
     #rueckmeldung {
       background: var(--cream);
@@ -659,16 +683,23 @@
     }
 
     .rueck-deadline {
-      display: inline-block;
-      background: var(--terra);
-      color: #FAF8F4;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
       font-family: 'Jost', sans-serif;
-      font-size: 0.72rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      border-radius: 50px;
-      padding: 0.4rem 1.2rem;
+      font-size: 0.78rem;
+      font-weight: 400;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
       margin-bottom: 2.4rem;
+      padding: 0.55rem 1.1rem;
+      background: transparent;
+      border: 1px solid rgba(138, 158, 133, 0.35);
+      border-radius: 4px;
+    }
+    .rueck-deadline svg {
+      flex-shrink: 0;
+      opacity: 0.6;
     }
 
     .btn-primary-large {
@@ -897,6 +928,13 @@
       font-weight: 300;
       line-height: 1.65;
       color: var(--text-muted);
+      text-align: left;
+    }
+    .kontakt-icon {
+      display: inline-block;
+      vertical-align: middle;
+      margin-right: 4px;
+      opacity: 0.7;
     }
 
     .kontakt-note {
@@ -1151,7 +1189,8 @@
       <div class="days-grid reveal-stagger">
 
         <div class="day-card reveal-child">
-          <p class="day-label">Freitag <span class="day-optional">optional</span></p>
+          <span class="day-optional day-optional-top">optional</span>
+          <p class="day-label">Freitag</p>
           <p class="day-date">18. Juni</p>
           <p class="day-desc">Wer mag, reist schon einen Tag früher an. Der Abend gehört dem Kennenlernen – mit Grill, Feuerstelle und guten Gesprächen auf dem Hof.</p>
         </div>
@@ -1163,7 +1202,8 @@
         </div>
 
         <div class="day-card reveal-child">
-          <p class="day-label">Sonntag <span class="day-optional">optional</span></p>
+          <span class="day-optional day-optional-top">optional</span>
+          <p class="day-label">Sonntag</p>
           <p class="day-date">20. Juni</p>
           <p class="day-desc">Wer mag, frühstückt noch gemeinsam auf dem Hof – ein ruhiger Ausklang, bevor sich alle auf den Heimweg machen.</p>
         </div>
@@ -1206,6 +1246,10 @@
           <p class="hof-address">Pegauer Str. 5<br>04523 Pegau OT Werben</p>
           <p class="hof-desc">Ein historischer Bauernhof mit Scheune, Garten und Feuerstelle – idyllisch gelegen, exklusiv für uns und unsere Gäste.</p>
           <a href="https://herberts-hof.de" target="_blank" rel="noopener" class="link-subtle">herberts-hof.de &rarr;</a>
+          <br><br>
+          <a href="https://open.spotify.com/episode/20PP7Kp0KztGxy834rsAN7?si=_EgabZeJQNaYvIam4Yl3QQ" target="_blank" rel="noopener" class="link-subtle">
+            <svg width="13" height="13" viewBox="0 0 13 13" fill="none" style="vertical-align:middle;margin-right:4px;" aria-hidden="true"><circle cx="6.5" cy="6.5" r="5.5" stroke="#8A9E85" stroke-width="1"/><path d="M4.5 8.5C5.8 7.8 8 7.8 9 8.2M4 6.8C5.7 5.9 8.5 5.9 9.5 6.5M3.5 5C5.7 3.9 9 3.9 10 4.7" stroke="#8A9E85" stroke-width="0.9" stroke-linecap="round"/></svg>Podcast: Herberts Hof anhören &rarr;
+          </a>
         </div>
       </div>
 
@@ -1213,13 +1257,17 @@
       <div class="anreise-grid reveal-stagger">
 
         <div class="anreise-card reveal-child">
-          <span class="anreise-icon">🚗</span>
+          <span class="anreise-icon" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M3 11l1.5-4.5h13L19 11" stroke="#8A9E85" stroke-width="1.2" stroke-linecap="round"/><rect x="2" y="11" width="18" height="6" rx="1.5" stroke="#8A9E85" stroke-width="1.2"/><circle cx="6.5" cy="17.5" r="1.5" stroke="#8A9E85" stroke-width="1.2"/><circle cx="15.5" cy="17.5" r="1.5" stroke="#8A9E85" stroke-width="1.2"/></svg>
+          </span>
           <p class="anreise-title">Auto</p>
           <p class="anreise-text">Der Hof ist nur per Auto erreichbar. Parken ist direkt auf dem Gelände möglich.<br><br>Navi-Adresse: Pegauer Str. 5, 04523 Pegau</p>
         </div>
 
         <div class="anreise-card reveal-child">
-          <span class="anreise-icon">🚌</span>
+          <span class="anreise-icon" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect x="2" y="4" width="18" height="12" rx="2" stroke="#8A9E85" stroke-width="1.2"/><line x1="2" y1="9" x2="20" y2="9" stroke="#8A9E85" stroke-width="1.2"/><line x1="11" y1="4" x2="11" y2="16" stroke="#8A9E85" stroke-width="1.2"/><circle cx="6" cy="18.5" r="1.5" stroke="#8A9E85" stroke-width="1.2"/><circle cx="16" cy="18.5" r="1.5" stroke="#8A9E85" stroke-width="1.2"/></svg>
+          </span>
           <p class="anreise-title">Shuttle am Samstag</p>
           <p class="anreise-text">Für alle, die nicht selbst fahren möchten: Wir organisieren einen Shuttleservice von eurer Unterkunft zur Location und zurück. Details folgen nach eurer Rückmeldung.</p>
         </div>
@@ -1228,6 +1276,21 @@
           Es gibt keine öffentlichen Verkehrsmittel, die direkt zum Hof fahren – plant eure Anreise entsprechend oder nutzt den Shuttle am Samstag.
         </div>
 
+      </div>
+
+    </div>
+
+      <!-- ===== KREIDETAFEL FOTO PLATZHALTER ===== -->
+      <!-- Foto hier einfügen: Kreidetafel mit 'Willkommen auf Herberts Hof' -->
+      <!-- Datei als 'kreidetafel.jpeg' neben index.html ins GitHub-Repo hochladen -->
+      <div class="kreidetafel-wrap reveal">
+        <img
+          src="kreidetafel.jpeg"
+          alt="Kreidetafel: Willkommen auf Herberts Hof"
+          class="kreidetafel-img"
+          loading="lazy"
+          onerror="this.parentElement.style.display='none';"
+        />
       </div>
 
     </div>
@@ -1255,22 +1318,28 @@
       <div class="unterkunft-grid reveal-stagger">
 
         <div class="unterkunft-card unterkunft-highlight reveal-child">
-          <span class="unterkunft-icon">⛺</span>
+          <span class="unterkunft-tag unterkunft-tag-top">Empfohlen</span>
+          <span class="unterkunft-icon" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M2 19L12 4L22 19H2Z" stroke="#8A9E85" stroke-width="1.2" stroke-linejoin="round"/><path d="M12 4L7 19M12 4L17 19" stroke="#8A9E85" stroke-width="1.2"/></svg>
+          </span>
           <h3 class="unterkunft-title">Camping auf dem Hof</h3>
           <p class="unterkunft-desc">Die entspannteste Option – Zelt oder Wohnwagen direkt auf der Wiese, der kürzeste Weg zurück nach der Party. Kostenlos, Platz vorhanden.</p>
-          <span class="unterkunft-tag">Empfohlen</span>
         </div>
 
         <div class="unterkunft-card reveal-child">
-          <span class="unterkunft-icon">🏨</span>
+          <span class="unterkunft-icon" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="1.5" stroke="#8A9E85" stroke-width="1.2"/><line x1="3" y1="9" x2="21" y2="9" stroke="#8A9E85" stroke-width="1.2"/><rect x="7" y="13" width="3" height="3" rx="0.5" stroke="#8A9E85" stroke-width="1"/><rect x="14" y="13" width="3" height="3" rx="0.5" stroke="#8A9E85" stroke-width="1"/><rect x="10" y="16" width="4" height="5" rx="0.5" stroke="#8A9E85" stroke-width="1"/></svg>
+          </span>
           <h3 class="unterkunft-title">Hotel in der Umgebung</h3>
           <p class="unterkunft-desc">Unser Tipp: der <a href="https://www.markkleeberger-hof.com" target="_blank" rel="noopener" class="link-subtle">Markkleeberger Hof</a>. Außerdem gibt es kleinere Pensionen und Ferienwohnungen in Pegau und Umgebung.</p>
         </div>
 
         <div class="unterkunft-card reveal-child">
-          <span class="unterkunft-icon">🏡</span>
+          <span class="unterkunft-icon" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M3 11L12 3L21 11V21H15V15H9V21H3V11Z" stroke="#8A9E85" stroke-width="1.2" stroke-linejoin="round"/></svg>
+          </span>
           <h3 class="unterkunft-title">Ferienunterkunft</h3>
-          <p class="unterkunft-desc">Ferienwohnungen für Gruppen in der Umgebung, z. B. über Airbnb. Gut geeignet, wenn ihr zu mehreren anreist und zusammen unterkommen möchtet.</p>
+          <p class="unterkunft-desc">Ferienwohnungen für Gruppen in der Umgebung, z. B. über Airbnb. Unser Tipp: <a href="https://www.juliundbeere.de/pension/" target="_blank" rel="noopener" class="link-subtle">Pension Juli und Beere</a>. Gut geeignet, wenn ihr zu mehreren anreist und zusammen unterkommen möchtet.</p>
         </div>
 
       </div>
@@ -1286,7 +1355,7 @@
   <section id="rueckmeldung" aria-labelledby="rueck-heading">
     <div class="section-inner" style="text-align:center;">
 
-      <span class="section-label">Bis 30. Juni 2026</span>
+      <span class="section-label">Bis 12. Juli 2026</span>
       <h2 class="section-heading reveal-heading" id="rueck-heading">Rückmeldung geben</h2>
 
       <p class="section-intro">
@@ -1301,9 +1370,17 @@
         <line x1="67" y1="12" x2="120" y2="12" stroke="#8A9E85" stroke-width="0.7" stroke-dasharray="2 4"/>
       </svg>
 
-      <!-- Deadline badge -->
+      <!-- Deadline info -->
       <div>
-        <span class="rueck-deadline">Rückmeldung bis 30. Juni 2026</span>
+        <span class="rueck-deadline">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+            <rect x="1" y="2.5" width="12" height="10.5" rx="1.5" stroke="#7a6e68" stroke-width="1"/>
+            <line x1="1" y1="5.5" x2="13" y2="5.5" stroke="#7a6e68" stroke-width="1"/>
+            <line x1="4" y1="1" x2="4" y2="4" stroke="#7a6e68" stroke-width="1" stroke-linecap="round"/>
+            <line x1="10" y1="1" x2="10" y2="4" stroke="#7a6e68" stroke-width="1" stroke-linecap="round"/>
+          </svg>
+          Rückmeldung bis 12. Juli 2026
+        </span>
       </div>
 
       <!-- ===== GOOGLE FORMS LINK HIER EINTRAGEN ===== -->
@@ -1313,13 +1390,12 @@
 
       <!-- Programmbeiträge / Überraschungen -->
       <div class="rueck-program-box reveal">
-        <span class="rueck-program-icon">🎉</span>
         <div class="rueck-program-text">
           <h3>Programm &amp; Überraschungen</h3>
           <p>
             Falls ihr Programmbeiträge oder Überraschungen plant, von denen wir nichts wissen sollen –
             wendet euch direkt an unsere Hochzeitsplanerin Stephanie:
-            <a href="https://wa.me/4916325822884">WhatsApp / Tel.: 0163 2582884</a>.
+            <a href="https://wa.me/4916325822884" class="link-subtle">WhatsApp / Tel.: 0163 2582884</a>.
             Sie koordiniert das Programm im Hintergrund, damit alles perfekt zusammenpasst.
           </p>
         </div>
@@ -1358,10 +1434,15 @@
 
         <div class="kontakt-card reveal-child">
           <p class="kontakt-card-label">Brautpaar</p>
-          <p class="kontakt-card-name">Alina &amp; Jannis</p>
+          <p class="kontakt-card-name">Alinas</p>
           <p class="kontakt-card-detail">
-            📱 <a href="https://wa.me/4917634148314" target="_blank" rel="noopener" class="link-subtle">Alina WhatsApp / Tel.: <br>0176 34148314</a><br>
-            📱 <a href="https://wa.me/4917683581987" target="_blank" rel="noopener" class="link-subtle">Jannis WhatsApp / Tel.: <br>0176 83581987</a>
+            <span class="kontakt-icon" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="3" y="1" width="8" height="12" rx="2" stroke="#8A9E85" stroke-width="1"/><line x1="5.5" y1="10.5" x2="8.5" y2="10.5" stroke="#8A9E85" stroke-width="1" stroke-linecap="round"/></svg></span>
+            <a href="https://wa.me/4917634148314" target="_blank" rel="noopener" class="link-subtle">WhatsApp / Tel.: 0176 34148314</a>
+          </p>
+          <p class="kontakt-card-name">Jannis</p>
+          <p class="kontakt-card-detail">
+            <span class="kontakt-icon" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="3" y="1" width="8" height="12" rx="2" stroke="#8A9E85" stroke-width="1"/><line x1="5.5" y1="10.5" x2="8.5" y2="10.5" stroke="#8A9E85" stroke-width="1" stroke-linecap="round"/></svg></span>
+            <a href="https://wa.me/4917683581987" target="_blank" rel="noopener" class="link-subtle">WhatsApp / Tel.: 0176 83581987</a>
           </p>
         </div>
 
@@ -1369,7 +1450,8 @@
           <p class="kontakt-card-label">Hochzeitsplanerin</p>
           <p class="kontakt-card-name">Stephanie</p>
           <p class="kontakt-card-detail">
-            📱 <a href="https://wa.me/4916325822884" target="_blank" rel="noopener" class="link-subtle">WhatsApp / Tel.: 0163 2582884</a>
+            <span class="kontakt-icon" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="3" y="1" width="8" height="12" rx="2" stroke="#8A9E85" stroke-width="1"/><line x1="5.5" y1="10.5" x2="8.5" y2="10.5" stroke="#8A9E85" stroke-width="1" stroke-linecap="round"/></svg></span>
+            <a href="https://wa.me/4916325822884" target="_blank" rel="noopener" class="link-subtle">WhatsApp / Tel.: 0163 2582884</a>
           </p>
           <p class="kontakt-note">Für Programmbeiträge &amp; Überraschungen, die wir nicht wissen sollen.</p>
         </div>
@@ -1387,8 +1469,7 @@
       <circle cx="80" cy="14" r="2" fill="#C4845A" opacity="0.6"/>
       <line x1="106" y1="14" x2="160" y2="14" stroke="#8A9E85" stroke-width="0.7"/>
     </svg>
-    <p class="footer-quote">Wir freuen uns auf ein unvergessliches Wochenende mit euch! 🥂</p>
-    <p class="footer-meta">Alina &amp; Jannis &nbsp;·&nbsp; 19. Juni 2027 &nbsp;·&nbsp; Herberts Hof, Werben</p>
+    <p class="footer-quote">Wir freuen uns unendlich auf ein unvergessliches Wochenende mit euch!</p>
   </footer>
 
   <!-- ===== JAVASCRIPT ===== -->
